@@ -10,8 +10,9 @@ import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Set;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+//import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class CalculatorTest {
 
