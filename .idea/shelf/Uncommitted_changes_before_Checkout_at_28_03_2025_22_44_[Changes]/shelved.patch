@@ -1,0 +1,180 @@
+Index: src/test/java/org/example/testing/CalculatorTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.testing;\r\n\r\nimport org.assertj.core.api.Assertions;\r\nimport org.junit.jupiter.api.*;\r\nimport org.junit.jupiter.params.ParameterizedTest;\r\nimport org.junit.jupiter.params.provider.CsvSource;\r\nimport org.junit.jupiter.params.provider.ValueSource;\r\nimport org.assertj.core.api.AbstractByteArrayAssert;\r\nimport java.text.MessageFormat;\r\nimport java.time.Duration;\r\nimport java.time.Instant;\r\nimport java.util.Set;\r\nimport static org.assertj.core.api.AssertionsForClassTypes.assertThat;\r\nimport static org.junit.jupiter.api.Assertions.*;\r\n\r\npublic class CalculatorTest {\r\n\r\n    private Calculator calculator;\r\n\r\n    private static Instant startedAt;\r\n\r\n\r\n    @BeforeAll\r\n    public static void startTimer(){\r\n        System.out.println(\"Le Timer est lancée !\");\r\n        startedAt= Instant.now();\r\n    }\r\n\r\n    @AfterAll\r\n    public static void endTimer(){\r\n        System.out.println(\"Fin du Timer !\");\r\n        Instant endedAt=Instant.now();\r\n        long duration = Duration.between(startedAt,endedAt).toMillis();\r\n        System.out.println(\"Durée des test :\"+duration+\" ms\");\r\n    }\r\n\r\n\r\n    @BeforeEach\r\n    void initCalculator(){\r\n        calculator = new Calculator();\r\n        System.out.println(\"Le Calculateur est instancié ! trop cool\");\r\n    }\r\n\r\n\r\n    @AfterEach\r\n    void endCalculator(){\r\n        calculator=null;\r\n        System.out.println(\"Le Calculateur n'est plus instancié :( FF\");\r\n    }\r\n\r\n\r\n\r\n    @Test\r\n    void testAddTwoNumbers(){\r\n        int a =2;\r\n        int b =3;\r\n\r\n        int somme=calculator.add(a,b);\r\n        assertThat(somme).isEqualTo(5);\r\n\r\n    }\r\n\r\n    @Test\r\n    void testMultiply(){\r\n        int a=9;\r\n        int b=8;\r\n\r\n        int mul=calculator.mul(a,b);\r\n\r\n        assertThat(mul).isEqualTo(72);\r\n        //assertEquals(72,mul);\r\n    }\r\n\r\n    @ParameterizedTest(name = \"{0} x 0 doit être égal à 0\")\r\n    @ValueSource(ints = { 1, 2, 42, 1011, 5089 })\r\n    public void multiplication_par_zero(int arg) {\r\n\r\n        int actualResult = calculator.mul(arg, 0);\r\n        assertThat(actualResult).isEqualTo(0);\r\n        //assertEquals(0, actualResult);\r\n\r\n    }\r\n\r\n    @ParameterizedTest(name = \"{0} + {1} should equal to {2}\")\r\n    @CsvSource({ \"1,1,2\", \"2,3,5\", \"42,57,99\" })\r\n    public void add_shouldReturnTheSum_ofMultipleIntegers(int arg1, int arg2, int expectResult) {\r\n\r\n        int actualResult = calculator.add(arg1, arg2);\r\n        assertThat(actualResult).isEqualTo(expectResult);\r\n        //assertEquals(expectResult, actualResult);\r\n\r\n    }\r\n\r\n    @Timeout(1)\r\n    @Test\r\n    public void longCalculationTest() {\r\n\r\n        calculator.longCalculation();\r\n    }\r\n\r\n    @Test\r\n    public void listDigits_shouldReturnsTheListOfDigits_ofPositiveInteger() {\r\n\r\n        // GIVEN\r\n        int number = 95897;\r\n        // WHEN\r\n        Set<Integer> actualDigits = calculator.digitsSet(number);\r\n        // THEN\r\n        assertThat(actualDigits).containsExactlyInAnyOrder(5, 7, 8, 9);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/org/example/testing/CalculatorTest.java b/src/test/java/org/example/testing/CalculatorTest.java
+--- a/src/test/java/org/example/testing/CalculatorTest.java	(revision 312f4038cb440777cd815f59f78603eed443d12f)
++++ b/src/test/java/org/example/testing/CalculatorTest.java	(date 1743185295505)
+@@ -9,6 +9,7 @@
+ import java.text.MessageFormat;
+ import java.time.Duration;
+ import java.time.Instant;
++import java.util.List;
+ import java.util.Set;
+ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+ import static org.junit.jupiter.api.Assertions.*;
+@@ -65,8 +66,8 @@
+         int a=9;
+         int b=8;
+ 
+-        int mul=calculator.mul(a,b);
+-
++        //int mul=calculator.mul(a,b);
++        int mul = a*b;
+         assertThat(mul).isEqualTo(72);
+         //assertEquals(72,mul);
+     }
+@@ -98,7 +99,7 @@
+         calculator.longCalculation();
+     }
+ 
+-    @Test
++    /*@Test
+     public void listDigits_shouldReturnsTheListOfDigits_ofPositiveInteger() {
+ 
+         // GIVEN
+@@ -106,7 +107,15 @@
+         // WHEN
+         Set<Integer> actualDigits = calculator.digitsSet(number);
+         // THEN
+-        assertThat(actualDigits).containsExactlyInAnyOrder(5, 7, 8, 9);
++        assertThat(actualDigits).assertContainsExactlyInAnyOrder(Integer.valueOf(5), Integer.valueOf(7), Integer.valueOf(8), Integer.valueOf(9));
++    }*/
++
++    @Test
++    public void testBryan(){
++        Set<Integer> expectedList= Set.of(4,3,2,1);
++
++        Set<Integer> actualDigits = Set.of(4,3,2,1);
++        assertThat(actualDigits).containsExactlyInAnyOrderElementsOf(expectedList);
+     }
+ 
+ }
+Index: src/main/java/org/example/testing/Calculator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.testing;\r\nimport java.lang.Math.*;\r\nimport java.util.HashSet;\r\nimport java.util.Set;\r\n\r\npublic class Calculator {\r\n\r\n    public int add(int a, int b) {\r\n        return a + b;\r\n    }\r\n\r\n    public double div(double a, double b) {\r\n        return (double) Math.round(a / b * 100) / 100;\r\n    }\r\n\r\n    public int mul(int a, int b) {\r\n        return a * b;\r\n    }\r\n\r\n    public int diff(int a, int b) {\r\n        return a - b;\r\n    }\r\n\r\n    public void longCalculation() {\r\n        try {\r\n            // Attendre 2 secondes\r\n            Thread.sleep(1000);\r\n        } catch (InterruptedException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    public Set<Integer> digitsSet(int number) {\r\n        Set<Integer> integers = new HashSet<Integer>();\r\n        String numberString = String.valueOf(number);\r\n\r\n        for (int i = 0; i < numberString.length(); i++) {\r\n            if (numberString.charAt(i) != '-') {\r\n                integers.add(Integer.parseInt(numberString, i, i + 1, 10));\r\n            }\r\n        }\r\n        return integers;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/testing/Calculator.java b/src/main/java/org/example/testing/Calculator.java
+--- a/src/main/java/org/example/testing/Calculator.java	(revision 312f4038cb440777cd815f59f78603eed443d12f)
++++ b/src/main/java/org/example/testing/Calculator.java	(date 1743179930289)
+@@ -24,7 +24,7 @@
+     public void longCalculation() {
+         try {
+             // Attendre 2 secondes
+-            Thread.sleep(1000);
++            Thread.sleep(500);
+         } catch (InterruptedException e) {
+             e.printStackTrace();
+         }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"eb47edbc-335a-4f0a-8c5b-761ee5992966\" name=\"Changes\" comment=\"Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/testing/Calculator.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/example/testing/Calculator.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/org/example/testing/CalculatorTest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/org/example/testing/CalculatorTest.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Butterpod&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Butterpod/JUnitTest_Git.git&quot;,\r\n    &quot;accountId&quot;: &quot;58637d26-8334-4ddd-81bc-e7020e1ddaec&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"QODANA_PROBLEMS_VIEW_TAB\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2uXSp3gT4ZbAs8r1KkGPgvJxHsT\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"JUnit.CalculatorTest.executor\": \"Run\",\r\n    \"Maven.JUnitTest [clean,install,-U].executor\": \"Run\",\r\n    \"Maven.JUnitTest [clean].executor\": \"Run\",\r\n    \"Maven.JUnitTest [package].executor\": \"Run\",\r\n    \"Maven.JUnitTest [test].executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"onboarding.tips.debug.path\": \"C:/Users/Acuna/IdeaProjects/JUnitTest/src/main/java/org/example/Main.java\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"org.example.testing\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunAnythingCache\">\r\n    <option name=\"myCommands\">\r\n      <command value=\"mvn clean install -U\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"CalculatorTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"JUnitTest\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.example.testing.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"org.example.testing\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.example.testing.CalculatorTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.CalculatorTest\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"eb47edbc-335a-4f0a-8c5b-761ee5992966\" name=\"Changes\" comment=\"\" />\r\n      <created>1742393605724</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1742393605724</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"1er Commit &amp; Push du projet JUnit !\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742400476463</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742400476463</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"1er Commit &amp; Push du projet JUnit ! (modifier)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742400532580</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742400532580</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1742832935841</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1742832935841</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"4\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"1er Commit &amp; Push du projet JUnit !\" />\r\n    <MESSAGE value=\"1er Commit &amp; Push du projet JUnit ! (modifier)\" />\r\n    <MESSAGE value=\"Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 312f4038cb440777cd815f59f78603eed443d12f)
++++ b/.idea/workspace.xml	(date 1743185225073)
+@@ -4,9 +4,8 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="eb47edbc-335a-4f0a-8c5b-761ee5992966" name="Changes" comment="Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test">
++    <list default="true" id="eb47edbc-335a-4f0a-8c5b-761ee5992966" name="Changes" comment="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/testing/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/testing/Calculator.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/testing/CalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/testing/CalculatorTest.java" afterDir="false" />
+     </list>
+@@ -57,6 +56,7 @@
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
+     "JUnit.CalculatorTest.executor": "Run",
++    "JUnit.CalculatorTest.testMultiply.executor": "Run",
+     "Maven.JUnitTest [clean,install,-U].executor": "Run",
+     "Maven.JUnitTest [clean].executor": "Run",
+     "Maven.JUnitTest [package].executor": "Run",
+@@ -66,7 +66,10 @@
+     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+     "git-widget-placeholder": "main",
+     "kotlin-language-version-configured": "true",
+-    "onboarding.tips.debug.path": "C:/Users/Acuna/IdeaProjects/JUnitTest/src/main/java/org/example/Main.java"
++    "onboarding.tips.debug.path": "C:/Users/Acuna/IdeaProjects/JUnitTest/src/main/java/org/example/Main.java",
++    "project.structure.last.edited": "Modules",
++    "project.structure.proportion": "0.0",
++    "project.structure.side.proportion": "0.2"
+   }
+ }]]></component>
+   <component name="RecentsManager">
+@@ -79,7 +82,7 @@
+       <command value="mvn clean install -U" />
+     </option>
+   </component>
+-  <component name="RunManager">
++  <component name="RunManager" selected="JUnit.CalculatorTest.testMultiply">
+     <configuration name="CalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="JUnitTest" />
+       <extension name="coverage">
+@@ -91,12 +94,29 @@
+       <option name="PACKAGE_NAME" value="org.example.testing" />
+       <option name="MAIN_CLASS_NAME" value="org.example.testing.CalculatorTest" />
+       <option name="TEST_OBJECT" value="class" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="CalculatorTest.testMultiply" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
++      <module name="JUnitTest" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="org.example.testing.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="PACKAGE_NAME" value="org.example.testing" />
++      <option name="MAIN_CLASS_NAME" value="org.example.testing.CalculatorTest" />
++      <option name="METHOD_NAME" value="testMultiply" />
++      <option name="TEST_OBJECT" value="method" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="JUnit.CalculatorTest.testMultiply" />
+         <item itemvalue="JUnit.CalculatorTest" />
+       </list>
+     </recent_temporary>
+@@ -134,13 +154,22 @@
+       <option name="project" value="LOCAL" />
+       <updated>1742832935841</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1">
++      <option name="closed" value="true" />
++      <created>1743178825082</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1743178825082</updated>
++    </task>
++    <option name="localTasksCounter" value="5" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="1er Commit &amp; Push du projet JUnit !" />
+     <MESSAGE value="1er Commit &amp; Push du projet JUnit ! (modifier)" />
+     <MESSAGE value="Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test" />
++    <MESSAGE value="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1" />
++    <option name="LAST_COMMIT_MESSAGE" value="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1" />
+   </component>
+ </project>
+\ No newline at end of file

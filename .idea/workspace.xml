@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb47edbc-335a-4f0a-8c5b-761ee5992966" name="Changes" comment="Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test">
+    <list default="true" id="eb47edbc-335a-4f0a-8c5b-761ee5992966" name="Changes" comment="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/testing/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/testing/Calculator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/testing/CalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/testing/CalculatorTest.java" afterDir="false" />
     </list>
@@ -25,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="fix-assert-that" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -56,7 +55,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "JUnit.CalculatorTest.executor": "Run",
+    "JUnit.CalculatorTest.executor": "Coverage",
+    "JUnit.CalculatorTest.testMultiply.executor": "Run",
     "Maven.JUnitTest [clean,install,-U].executor": "Run",
     "Maven.JUnitTest [clean].executor": "Run",
     "Maven.JUnitTest [package].executor": "Run",
@@ -66,7 +66,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "C:/Users/Acuna/IdeaProjects/JUnitTest/src/main/java/org/example/Main.java"
+    "onboarding.tips.debug.path": "C:/Users/Acuna/IdeaProjects/JUnitTest/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -79,7 +82,7 @@
       <command value="mvn clean install -U" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.CalculatorTest">
     <configuration name="CalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JUnitTest" />
       <extension name="coverage">
@@ -95,9 +98,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CalculatorTest.testMultiply" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JUnitTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.testing.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.testing" />
+      <option name="MAIN_CLASS_NAME" value="org.example.testing.CalculatorTest" />
+      <option name="METHOD_NAME" value="testMultiply" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CalculatorTest" />
+        <item itemvalue="JUnit.CalculatorTest.testMultiply" />
+        <item itemvalue="JUnit.CalculatorTest" />
+        <item itemvalue="JUnit.CalculatorTest.testMultiply" />
       </list>
     </recent_temporary>
   </component>
@@ -134,13 +156,27 @@
       <option name="project" value="LOCAL" />
       <updated>1742832935841</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1">
+      <option name="closed" value="true" />
+      <created>1743178825082</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743178825082</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1er Commit &amp; Push du projet JUnit !" />
     <MESSAGE value="1er Commit &amp; Push du projet JUnit ! (modifier)" />
     <MESSAGE value="Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de Doc sur les Differents test employés (docTest)&#10;Fichier CalculatorTest contient tout les test employés (AfterAll, BeforEach, ParameterizedTest, etc...) &#10;Et Calculator.java la Classe utiliser qui subit les test" />
+    <MESSAGE value="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Début des test avec AssertJ ( asserthat() ).&#10;&#10;Probleme avec la methode &quot;containsExactlyInAnyOrder()&quot; pour un test, il ne reconnait pas la methode.&#10;&#10;Peut etre un probleme de dépendance maven, ou IntelliJ.&#10;&#10;Version maven AssertJ-core : 4.0.0-M1" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/JUnitTest$CalculatorTest.ic" NAME="CalculatorTest Coverage Results" MODIFIED="1743768376111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.testing.*</FILTER>
+    </SUITE>
   </component>
 </project>

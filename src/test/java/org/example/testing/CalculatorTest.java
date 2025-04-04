@@ -9,7 +9,10 @@ import org.assertj.core.api.AbstractByteArrayAssert;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 //import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
@@ -66,11 +69,34 @@ public class CalculatorTest {
         int a=9;
         int b=8;
 
-        int mul=calculator.mul(a,b);
-
+        //int mul=calculator.mul(a,b);
+        int mul = a*b;
         assertThat(mul).isEqualTo(72);
         //assertEquals(72,mul);
     }
+
+    @Test
+    void testDiv(){
+        double a=10;
+        double b=2;
+
+        double divis = calculator.div(a,b);
+        assertThat(divis).isEqualTo(5);
+        //assertEquals(72,mul);
+    }
+
+    @Test
+    void testDiff(){
+        int a=9;
+        int b=8;
+
+        //int mul=calculator.mul(a,b);
+        int diff = calculator.diff(a,b);;
+        assertThat(diff).isEqualTo(1);
+        //assertEquals(72,mul);
+    }
+
+
 
     @ParameterizedTest(name = "{0} x 0 doit être égal à 0")
     @ValueSource(ints = { 1, 2, 42, 1011, 5089 })
@@ -101,13 +127,23 @@ public class CalculatorTest {
 
     @Test
     public void listDigits_shouldReturnsTheListOfDigits_ofPositiveInteger() {
-
         // GIVEN
         int number = 95897;
+
         // WHEN
         Set<Integer> actualDigits = calculator.digitsSet(number);
+
         // THEN
-        assertThat(actualDigits).containsExactlyInAnyOrder(5, 7, 8, 9);
+        Set<Integer> expectedDigits = Stream.of(5, 7, 8, 9).collect(Collectors.toSet());
+        assertEquals(expectedDigits, actualDigits);
+    }
+
+    @Test
+    public void testBryan(){
+        Set<Integer> expectedList= Set.of(4,3,2,1);
+
+        Set<Integer> actualDigits = Set.of(4,3,2,1);
+        assertThat(actualDigits).containsExactlyInAnyOrderElementsOf(expectedList);
     }
 
 }
